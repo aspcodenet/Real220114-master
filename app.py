@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for, redirect
 from models import db, Person, seedData
 from flask_migrate import Migrate, upgrade
 from random import randint
@@ -76,14 +76,24 @@ def personerPage():
             pages=paginationObject.pages, 
             activePage=activePage)
 
-@app.route("/person/<id>")  # EDIT   3
+@app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3
 def personPage(id):
-    personFromDb = Person.query.filter(Person.id == id).first()
     form = PersonEditForm(request.form) 
-    form.name.data = personFromDb.namn
-    form.city.data = personFromDb.city
-    form.postalcode.data = int(personFromDb.postalcode)
+    personFromDb = Person.query.filter(Person.id == id).first()
+
+    if request.method == "GET":
+        form.name.data = personFromDb.namn
+        form.city.data = personFromDb.city
+        form.postalcode.data = int(personFromDb.postalcode)
+        return render_template('person.html',person=personFromDb, form=form)
+    if form.validate_on_submit():
+        personFromDb.namn = form.name.data
+        personFromDb.city = form.city.data 
+        personFromDb.postalcode = str(form.postalcode.data)
+        db.session.commit()
+        return redirect(url_for('personerPage'))
     return render_template('person.html',person=personFromDb, form=form)
+    
 
 
 
