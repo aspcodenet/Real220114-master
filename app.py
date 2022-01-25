@@ -114,6 +114,7 @@ def personNewPage():
         personFromDb.namn = form.name.data
         personFromDb.city = form.city.data 
         personFromDb.postalcode = str(form.postalcode.data)
+        personFromDb.position = form.position.data
         db.session.add(personFromDb)
         db.session.commit()
         return redirect(url_for('personerPage'))
