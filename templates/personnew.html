@@ -1,7 +1,7 @@
 {% extends "basetemplate.html" %} 
 {% from "_formHelpers.html" import render_field %}
 {% block title %} 
-View Person {{ person.namn}}
+New Person 
 {% endblock %} 
 
 
@@ -18,22 +18,16 @@ View Person {{ person.namn}}
                     {{ form.csrf_token }}
                     <div class="card">
                     <div class="card-header">
-                        <strong>Edit</strong> Person
+                        <strong>New</strong> Person
                     </div>
                     <div class="card-body card-block">
                             {{ render_field(form.name) }}
                             {{ render_field(form.postalcode) }}
                             {{ render_field(form.city) }} 
-                            {{ render_field(form.position) }} 
-                            {{ render_field(form.pwd) }} 
-                            {{ render_field(form.pwdagain) }} 
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary btn-sm">
-                            <i class="fa fa-dot-circle-o"></i> Save
-                        </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-ban"></i> Reset
+                            <i class="fa fa-dot-circle-o"></i> Save new!
                         </button>
                     </div>
                 </div>  

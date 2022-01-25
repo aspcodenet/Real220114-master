@@ -9,6 +9,9 @@ class Person(db.Model):
     namn = db.Column(db.String(80), unique=False, nullable=False)
     city = db.Column(db.String(80), unique=False, nullable=False)
     postalcode = db.Column(db.String(10), unique=False, nullable=False)
+    position = db.Column(db.String(1), unique=False, nullable=False) # G, D, F
+
+
 
 
 def seedData():

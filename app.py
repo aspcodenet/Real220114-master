@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect
 from models import db, Person, seedData
 from flask_migrate import Migrate, upgrade
 from random import randint
-from forms import PersonEditForm
+from forms import PersonEditForm, PersonNewForm
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -76,7 +76,28 @@ def personerPage():
             pages=paginationObject.pages, 
             activePage=activePage)
 
-@app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3
+
+@app.route("/personnew",methods=["GET", "POST"]) 
+def personNewPage():
+    form = PersonNewForm(request.form) 
+
+    if request.method == "GET":
+        return render_template('personnew.html',form=form)
+
+    if form.validate_on_submit():
+        personFromDb = Person()
+        personFromDb.namn = form.name.data
+        personFromDb.city = form.city.data 
+        personFromDb.postalcode = str(form.postalcode.data)
+        db.session.add(personFromDb)
+        db.session.commit()
+        return redirect(url_for('personerPage'))
+
+    return render_template('personnew.html',form=form)
+
+
+
+@app.route("/person<id>",methods=["GET", "POST"])  # EDIT   3
 def personPage(id):
     form = PersonEditForm(request.form) 
     personFromDb = Person.query.filter(Person.id == id).first()
@@ -85,10 +106,12 @@ def personPage(id):
         form.name.data = personFromDb.namn
         form.city.data = personFromDb.city
         form.postalcode.data = int(personFromDb.postalcode)
+        form.position.data = personFromDb.position
         return render_template('person.html',person=personFromDb, form=form)
     if form.validate_on_submit():
         personFromDb.namn = form.name.data
         personFromDb.city = form.city.data 
+        personFromDb.position = form.position.data
         personFromDb.postalcode = str(form.postalcode.data)
         db.session.commit()
         return redirect(url_for('personerPage'))

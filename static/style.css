@@ -280,3 +280,8 @@ td i {
   #playlist tbody tr.odd  td {
     background-color: #fff;
   }
+
+
+  .help-block{
+      color:red;
+  }
