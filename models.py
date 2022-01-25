@@ -11,6 +11,13 @@ class Person(db.Model):
     postalcode = db.Column(db.String(10), unique=False, nullable=False)
     position = db.Column(db.String(1), unique=False, nullable=False) # G, D, F
 
+class UserRegistration(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(80), unique=False, nullable=False)
+    firstname = db.Column(db.String(40), unique=False, nullable=False)
+    lastname = db.Column(db.String(40), unique=False, nullable=False)
+    password = db.Column(db.String(80), unique=False, nullable=False)
+    updates = db.Column(db.Boolean, unique=False, nullable=False)  
 
 
 

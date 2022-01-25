@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, url_for, redirect
-from models import db, Person, seedData
+from models import db, Person, seedData,UserRegistration
 from flask_migrate import Migrate, upgrade
 from random import randint
-from forms import PersonEditForm, PersonNewForm
+from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -75,6 +75,31 @@ def personerPage():
             has_prev=paginationObject.has_prev, 
             pages=paginationObject.pages, 
             activePage=activePage)
+
+@app.route("/userconfirmation")
+def userConfirmationPage():
+    namnet = request.args.get('namn',"")
+    return render_template('userconfirmation.html',namn=namnet)
+
+@app.route("/newuser",methods=["GET", "POST"]) 
+def userRegistrationPage():
+    form = UserRegistrationForm(request.form) 
+    if request.method == "GET":
+        return render_template('userregistration.html',form=form)
+    if form.validate_on_submit():
+        userReg = UserRegistration()
+        userReg.email = form.email.data
+        userReg.firstname = form.firstname.data
+        userReg.lastname = form.lastname.data
+        userReg.password = form.pwd.data
+        userReg.updates = form.updates.data
+        db.session.add(userReg)
+        db.session.commit()
+        return redirect(url_for('userConfirmationPage', namn=form.firstname.data ))
+
+    return render_template('userregistration.html',form=form)
+
+
 
 
 @app.route("/personnew",methods=["GET", "POST"]) 
