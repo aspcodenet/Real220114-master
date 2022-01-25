@@ -83,7 +83,7 @@ def personPage(id):
     form.name.data = personFromDb.namn
     form.city.data = personFromDb.city
     form.postalcode.data = int(personFromDb.postalcode)
-    return render_template('person.html',person=person, form=form)
+    return render_template('person.html',person=personFromDb, form=form)
 
 
 
