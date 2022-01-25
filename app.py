@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 from models import db, Person, seedData
 from flask_migrate import Migrate, upgrade
 from random import randint
+from forms import PersonEditForm
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -75,10 +76,14 @@ def personerPage():
             pages=paginationObject.pages, 
             activePage=activePage)
 
-@app.route("/person/<id>")
+@app.route("/person/<id>")  # EDIT   3
 def personPage(id):
-    person = Person.query.filter(Person.id == id).first()
-    return render_template('person.html',person=person, name="Stefan")
+    personFromDb = Person.query.filter(Person.id == id).first()
+    form = PersonEditForm(request.form) 
+    form.name.data = personFromDb.namn
+    form.city.data = personFromDb.city
+    form.postalcode.data = int(personFromDb.postalcode)
+    return render_template('person.html',person=person, form=form)
 
 
 
