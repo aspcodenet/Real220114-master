@@ -3,6 +3,7 @@ from models import db, Person, seedData,UserRegistration
 from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
+from model import User, user_manager
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -10,6 +11,9 @@ app.config.from_object('config.ConfigDebug')
 db.app = app
 db.init_app(app)
 migrate = Migrate(app,db)
+user_manager.app = app
+user_manager.init_app(app,db,User)
+
 
 @app.route("/hej")
 def hejPage():
