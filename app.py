@@ -3,7 +3,7 @@ from models import db, Person, seedData,UserRegistration
 from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
-from model import User, user_manager
+from models import User, user_manager
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
