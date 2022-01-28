@@ -4,7 +4,7 @@ from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
 from models import User, user_manager
-from flask_user import login_required, roles_required
+from flask_user import login_required, roles_required, roles_accepted
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -35,7 +35,8 @@ def indexPage():
 # To improve: get med defaultvalue
 # search!
 @app.route("/personer")
-@login_required
+#@login_required
+@roles_accepted('Customer', 'Admin') # AND # OR
 def personerPage():
     
     sortColumn = request.args.get('sortColumn', 'namn')
