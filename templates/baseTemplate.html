@@ -16,7 +16,7 @@
     <div class="grid-container">
         <header class="header">
             <div class="header__avatar">
-                
+                {{ current_user.email }}
 
             </div>
           </header>
@@ -38,19 +38,28 @@
                           Personer</a>
                   </li>
 
-                  <li class="sidenav__list-item">
+                {%  if current_user.is_authenticated    %}
+                <li class="sidenav__list-item">
+                    <a href="{{ url_for('user.logout') }}">
+                        <i class="bx bx-log-out"></i>
+                        Logout</a>
+                </li>
+
+                {%  else    %}
+                    <li class="sidenav__list-item">
                     <a href="{{ url_for('user.login') }}">
                         <i class="bx bx-log-out"></i>
                         Logga in</a>
                    </li>
 
+                   <li class="sidenav__list-item">
+                    <a href="{{ url_for('user.register') }}">
+                        <i class="bx bx-log-out"></i>
+                        Register</a>
+                   </li>
 
 
-                  <li class="sidenav__list-item">
-                      <a href="#">
-                          <i class="bx bx-log-out"></i>
-                          Logout</a>
-                  </li>
+                {%  endif    %}
               </ul>
           </aside>        
         <main class="main">
