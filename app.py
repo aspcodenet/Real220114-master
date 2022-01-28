@@ -4,6 +4,7 @@ from flask_migrate import Migrate, upgrade
 from random import randint
 from forms import PersonEditForm, PersonNewForm, UserRegistrationForm
 from models import User, user_manager
+from flask_user import login_required, roles_required
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -34,6 +35,7 @@ def indexPage():
 # To improve: get med defaultvalue
 # search!
 @app.route("/personer")
+@login_required
 def personerPage():
     
     sortColumn = request.args.get('sortColumn', 'namn')
@@ -107,6 +109,7 @@ def userRegistrationPage():
 
 
 @app.route("/personnew",methods=["GET", "POST"]) 
+@roles_required("Admin")
 def personNewPage():
     form = PersonNewForm(request.form) 
 
@@ -126,8 +129,8 @@ def personNewPage():
     return render_template('personnew.html',form=form)
 
 
-
-@app.route("/person<id>",methods=["GET", "POST"])  # EDIT   3
+@app.route("/person/<id>",methods=["GET", "POST"])  # EDIT   3
+@roles_required("Admin")
 def personPage(id):
     form = PersonEditForm(request.form) 
     personFromDb = Person.query.filter(Person.id == id).first()
