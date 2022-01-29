@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect
-from models import Person
+from models import Person, db
 from areas.personer.forms import PersonEditForm, PersonNewForm
 
 personerBluePrint =  Blueprint('personer', __name__,
@@ -71,7 +71,7 @@ def personNewPage():
         personFromDb.position = form.position.data
         db.session.add(personFromDb)
         db.session.commit()
-        return redirect(url_for('personerPage'))
+        return redirect(url_for('personer.personerPage'))
 
     return render_template('personer/personnew.html',form=form)
 

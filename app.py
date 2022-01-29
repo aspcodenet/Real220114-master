@@ -5,6 +5,7 @@ from flask_migrate import Migrate, upgrade
 from areas.site.sitePages import siteBluePrint
 from areas.personer.personerPages import personerBluePrint
 from areas.userregistration.userRegistrationPages import userRegistrationBluePrint
+from areas.api.person.apipersonPages import apiPersonBluePrint
 
 app = Flask(__name__)
 app.config.from_object('config.ConfigDebug')
@@ -16,6 +17,7 @@ migrate = Migrate(app,db)
 app.register_blueprint(siteBluePrint)
 app.register_blueprint(personerBluePrint)
 app.register_blueprint(userRegistrationBluePrint)
+app.register_blueprint(apiPersonBluePrint)
 
 
 
