@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect
-from models import Person, db
+from models import Person, db, CreditCard
 from flask import jsonify
 
 
@@ -72,3 +72,16 @@ def update( id):
     person = _mapJsonToPerson(data, person)
     db.session.commit()
     return ''
+
+
+
+
+@apiPersonBluePrint.route('/api/<id>/cards/', methods=["GET"])
+def personCards(id):
+    listaMedCards = []
+    page = int(request.args.get('page', 1))
+    cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc()).paginate(page,5,False)
+    for card in cards.items:
+        c = { "number":card.number, "cardtype":card.cardtype, "datum":card.Datum }
+        listaMedCards.append(c)
+    return jsonify(listaMedCards)

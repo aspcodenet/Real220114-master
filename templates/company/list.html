@@ -21,42 +21,39 @@ Visar sidan {{ page }} av totalt {{ pages }}
         <table class="table">
             <tr>
                 <th>Namn
-                    <a href="{{  url_for('personer.personerPage',sortColumn='namn',sortOrder='asc', q=q ) }}">
+                    <a href="{{  url_for('company.indexPage',sortColumn='namn',sortOrder='asc', q=q ) }}">
                         <i class='bx bx-up-arrow-alt'></i>
                     </a>
-                    <a href="{{  url_for('personer.personerPage',sortColumn='namn',sortOrder='desc',q=q ) }}">
+                    <a href="{{  url_for('company.indexPage',sortColumn='namn',sortOrder='desc',q=q ) }}">
                         <i class='bx bx-down-arrow-alt' ></i>
                     </a>
                 </th>
-                <th>Postnummer
-                    <a href="{{  url_for('personer.personerPage',sortColumn='postal',sortOrder='asc',q=q ) }}">
+                <th>Street
+                    <a href="{{  url_for('company.indexPage',sortColumn='postal',sortOrder='asc',q=q ) }}">
                         <i class='bx bx-up-arrow-alt'></i>
                     </a>
-                    <a href="{{  url_for('personer.personerPage',sortColumn='postal',sortOrder='desc',q=q ) }}">
+                    <a href="{{  url_for('company.indexPage',sortColumn='postal',sortOrder='desc',q=q ) }}">
                         <i class='bx bx-down-arrow-alt' ></i>
                     </a>
                 </th>
                 <th>Stad
-                    <a href="{{  url_for('personer.personerPage',sortColumn='city',sortOrder='asc',q=q ) }}">
+                    <a href="{{  url_for('company.indexPage',sortColumn='city',sortOrder='asc',q=q ) }}">
                         <i class='bx bx-up-arrow-alt'></i>
                     </a>
-                    <a href="{{  url_for('personer.personerPage',sortColumn='city',sortOrder='desc',q=q ) }}">
+                    <a href="{{  url_for('company.indexPage',sortColumn='city',sortOrder='desc',q=q ) }}">
                         <i class='bx bx-down-arrow-alt' ></i>
                     </a>
                 </th>
                 <th></th>
                 <th></th>
             </tr>
-            {% for person in allaPersoner %}      
+            {% for person in companies %}      
                 <tr>
-                    <td>{{ person.namn }}</td>
-                    <td>{{ person.postalcode }}</td>
+                    <td>{{ person.name }}</td>
+                    <td>{{ person.street }}</td>
                     <td>{{ person.city }}</td>
                     <td>
-                        <a href="{{ url_for('personer.personPage', id=person.id )  }}"><i class='bx bx-edit'></i></a>
-                    </td>
-                    <td>
-                        <a href="{{ url_for('personer.cardPage', id=person.id )  }}"><i class='bx bx-credit-card'></i></a>
+                        <a href="{{ url_for('company.companyPage', id=person.id )  }}"><i class='bx bx-edit'></i></a>
                     </td>
                 </tr>
             {% endfor %}
@@ -64,7 +61,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
                 <tr>
                     <td>
                         {% if has_prev %}
-                            <a class="btn" href="{{ url_for('personer.personerPage', page=page-1, sortColumn=sortColumn, sortOrder=sortOrder, q=q ) }}">
+                            <a class="btn" href="{{ url_for('company.indexPage', page=page-1, sortColumn=sortColumn, sortOrder=sortOrder, q=q ) }}">
                                 Prev                                
                             </a>
                         {% endif %}
@@ -78,7 +75,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
                     <td>
                     <td>
                         {% if has_next %}
-                            <a class="btn" href="{{ url_for('personer.personerPage', page=page+1, sortColumn=sortColumn, sortOrder=sortOrder,q=q) }}">
+                            <a class="btn" href="{{ url_for('company.indexPage', page=page+1, sortColumn=sortColumn, sortOrder=sortOrder,q=q) }}">
                                 Next                                
                             </a>
                         {% endif %}
@@ -90,7 +87,6 @@ Visar sidan {{ page }} av totalt {{ pages }}
         
 
 
-            <a class="btn" href="{{ url_for('personer.personNewPage')  }}">Create new</a>
 
     </div>
 </div>

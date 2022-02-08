@@ -37,6 +37,14 @@
                           <i class="bx bx-cog"></i>
                           Personer</a>
                   </li>
+
+                  <li class="sidenav__list-item {{ 'active' if activePage == 'company' }}">
+                    <a href="{{ url_for('company.indexPage') }}">
+                        <i class="bx bx-cog"></i>
+                        Companies</a>
+                </li>
+
+
                   <li class="sidenav__list-item">
                       <a href="#">
                           <i class="bx bx-log-out"></i>

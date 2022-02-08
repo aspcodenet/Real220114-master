@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, url_for, redirect
-from models import Person, db
+from models import Person, db, CreditCard
 from areas.personer.forms import PersonEditForm, PersonNewForm
 
 personerBluePrint =  Blueprint('personer', __name__,
@@ -17,6 +17,8 @@ def personerPage():
 
     searchWord = request.args.get('q','')
 
+    # productName  Blå stol 2022
+    # searchWord - stolar, 
     activePage = "personerPage"
     allaPersoner = Person.query.filter(
         Person.namn.like('%' + searchWord + '%') | 
@@ -75,6 +77,14 @@ def personNewPage():
 
     return render_template('personer/personnew.html',form=form)
 
+
+
+@personerBluePrint.route("/personer/card/<id>",methods=["GET"])  # EDIT   3
+def cardPage(id):
+    personFromDb = Person.query.filter(Person.id == id).first()
+    #cards = CreditCard.query.filter(CreditCard.PersonId == id).order_by(CreditCard.Datum.desc())
+    cards = []
+    return render_template('personer/cardPage.html',person=personFromDb, cards=cards)
 
 
 @personerBluePrint.route("/personer/edit/<id>",methods=["GET", "POST"])  # EDIT   3
